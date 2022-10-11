@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ProductService } from '../services/product.service';
 import { Product } from './product';
 
 @Component({
@@ -8,17 +10,13 @@ import { Product } from './product';
 })
 export class ProductComponent implements OnInit {
 
-  products: Product[] = [
-    { id: 1, name: 'One Plus 7 Pro', mfd: new Date('1-Jan-2019'), price: 500 },
-    { id: 2, name: 'IPhone 11 Pro', mfd: new Date('1-Mar-2019'), price: 1000 },
-    { id: 3, name: 'Pixel 3', mfd: new Date('1-Dec-2019'), price: 700 }
-  ]
+  products$!: Observable<Product[]>; 
 
-  constructor() {
+  constructor( private productService: ProductService) {
     this.ngOnInit
   }
 
   ngOnInit(): void {
-    console.log()
+    this.products$ = this.productService.getProduct();
   }
 }
